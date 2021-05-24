@@ -14188,7 +14188,7 @@ return 2;
 }
 else {
 MatchState ms;
-int anchor = (*p == '^') ? (p++, 1) : 0;
+    int anchor = (*p == '^') ? ((void)(p++), 1) : 0;
 const char *s1=s+init;
 ms.L = L;
 ms.src_init = s;
@@ -14324,7 +14324,7 @@ const char *src = luaL_checklstring(L, 1, &srcl);
 const char *p = luaL_checkstring(L, 2);
 int  tr = lua_type(L, 3);
 int max_s = luaL_optint(L, 4, srcl+1);
-int anchor = (*p == '^') ? (p++, 1) : 0;
+    int anchor = (*p == '^') ? ((void)(p++), 1) : 0;
 int n = 0;
 MatchState ms;
 luaL_Buffer b;
@@ -14769,12 +14769,12 @@ set2(L, i, u-1);
 i = l; j = u-1;
 for (;;) {  /* invariant: a[l..i] <= P <= a[j..u] */
 /* repeat ++i until a[i] >= P */
-while (lua_rawgeti(L, 1, ++i), sort_comp(L, -1, -2)) {
+    while ((void)(lua_rawgeti(L, 1, ++i)), sort_comp(L, -1, -2)) {
 if (i>u) luaL_error(L, "invalid order function for sorting");
 lua_pop(L, 1);  /* remove a[i] */
 }
 /* repeat --j until a[j] <= P */
-while (lua_rawgeti(L, 1, --j), sort_comp(L, -3, -1)) {
+    while ((void)(lua_rawgeti(L, 1, --j)), sort_comp(L, -3, -1)) {
 if (j<l) luaL_error(L, "invalid order function for sorting");
 lua_pop(L, 1);  /* remove a[j] */
 }

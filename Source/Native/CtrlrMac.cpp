@@ -126,7 +126,14 @@ const Result CtrlrMac::setBundleInfo (CtrlrPanel *sourceInfo, const File &bundle
 
 	if (plist.existsAsFile() && plist.hasWriteAccess())
 	{
-		ScopedPointer <XmlElement> plistXml (XmlDocument::parse(plist));
+        File& plist2 = (plist);
+        ScopedPointer<XmlDocument&> plistXml;
+        // XmlDocument tmp = XmlDocument::parse(plist2);
+        XmlDocument tmp = XmlDocument (plist).getDocumentElement();
+        
+        plistXml = new ScopedPointer<XmlDocument>(tmp);
+        //ScopedPointer<XmlDocument> plistXml = ScopedPointer<XmlDocument>(XmlDocument::parse(bundle.getChildFile("Contents/Info.plist")));
+		// ScopedPointer <XmlElement> plistXml (tmp);
 		if (plistXml == nullptr)
 		{
 			return (Result::fail("MAC native, can't parse Info.plist as a XML document"));
